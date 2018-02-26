@@ -1,0 +1,72 @@
+<form [formGroup]="userSearchForm" (ngSubmit)="search($event)">
+<div class="example-container">
+  <mat-form-field>
+    <input matInput formControlName="filter" placeholder="All Fields Search">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="firstName" placeholder="First Name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="lastName" placeholder="Last Name">
+  </mat-form-field>
+
+  <button mat-raised-button (click)="search()">Search</button>
+</div>
+</form>
+
+<div class="example-container mat-elevation-z8" *ngIf="data">
+  <mat-table #table [dataSource]="data" matSort matSortActive="firstName" matSortDirection="asc" matSortDisableClear>
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="dob">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> DoB </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dob}} </mat-cell>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="education">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Education </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.education}} </mat-cell>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="occupation">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Occupation </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.occupation}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="currentLocation">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Current Location</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.currentLocation}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+     [length]="usersCount"
+     [pageSize]="5"
+     [pageSizeOptions]="[5, 10, 20]"
+  >
+  </mat-paginator>
+</div>
