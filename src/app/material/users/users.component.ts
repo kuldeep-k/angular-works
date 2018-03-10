@@ -120,7 +120,7 @@ export class UsersComponent implements OnInit {
         this.usersSubject.next(response['data']);
         this.count = response['total'];
       }, error => {
-        console.log(error)
+        // console.log(error)
       });
     }
 
