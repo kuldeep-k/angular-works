@@ -1,0 +1,73 @@
+<h1>
+  Material > Users -> Manage
+</h1>
+<style>
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+.mat-card {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+</style>
+
+<form [formGroup]="userManageForm" (ngSubmit)="save($event)">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Manage User</mat-card-title>
+  </mat-card-header>
+    <mat-card-content>
+
+<div class="example-container">
+  <mat-form-field>
+    <input matInput formControlName="email" placeholder="Email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="password" formControlName="password" placeholder="Password">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="password" formControlName="confirmpassword" placeholder="Confirm Password">
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input matInput formControlName="firstName" placeholder="First Name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="lastName" placeholder="Last Name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Date of Birth">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="education" placeholder="Education">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="occupation" placeholder="Occupation">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="currentLocation" placeholder="Current Location">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="permLocation" placeholder="Perm. Location">
+  </mat-form-field>
+</div>
+</mat-card-content>
+<mat-card-actions>
+  <button mat-raised-button (click)="save()">Save</button>
+</mat-card-actions>
+
+</mat-card>
+</form>

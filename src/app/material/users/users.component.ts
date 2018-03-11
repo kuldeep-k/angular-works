@@ -8,6 +8,7 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // import { Observable } from  'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-users',
@@ -23,7 +24,7 @@ export class UsersComponent implements OnInit {
   public userSearchForm: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private fb: FormBuilder, public usersService: UsersService) { }
+  constructor(private fb: FormBuilder, private router: Router, public usersService: UsersService) { }
 
   ngOnInit() {
     this.userSearchForm = this.fb.group({
@@ -78,6 +79,10 @@ export class UsersComponent implements OnInit {
             this.paginator.pageSize);
     }
     // let data = new MatTableDataSource<Users>(sdata);
+
+    openAddUser() {
+      this.router.navigate(['users/add']);
+    }
   }
 
 
