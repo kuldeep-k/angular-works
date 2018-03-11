@@ -19,7 +19,7 @@
   <button mat-raised-button (click)="search()">Search</button>
 </div>
 </form>
-
+<button mat-raised-button (click)="openAddUser()">Add User</button>
 <div class="example-container mat-elevation-z8" *ngIf="data">
   <mat-table #table [dataSource]="data" matSort matSortActive="firstName" matSortDirection="asc" matSortDisableClear>
 
