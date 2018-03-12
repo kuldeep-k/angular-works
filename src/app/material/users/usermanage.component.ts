@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsersService, Users, UserListResponse } from './users.service';
+import { UsersService, Users, UserListResponse } from '../../lib/users.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { Observable } from "rxjs/Rx";
@@ -27,7 +27,7 @@ export class UsermanageComponent implements OnInit {
   constructor(private fb: FormBuilder, public usersService: UsersService) { }
 
   ngOnInit() {
-    this.userManageForm = this.fb.group({
+    /*this.userManageForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
       confirmpassword: ["", [Validators.required, Validators.minLength(6), this.matchValidator(this.password)]],
@@ -38,8 +38,19 @@ export class UsermanageComponent implements OnInit {
       occupation: ["", Validators.required],
       permLocation: ["", Validators.required],
       currentLocation: ["", Validators.required]
+    });*/
+    this.userManageForm = this.fb.group({
+      email: [""],
+      password: [""],
+      confirmpassword: [""],
+      firstName: [""],
+      lastName: [""],
+      dob: [""],
+      education: [""],
+      occupation: [""],
+      permLocation: [""],
+      currentLocation: [""]
     });
-
   }
 
   matchValidator(fieldName: string) {
@@ -83,6 +94,14 @@ export class UsermanageComponent implements OnInit {
   }
 
   save() {
+    if(this.userManageForm.valid) {
+        let user = this.userManageForm.value;
+
+        // user.dob = new Date(user.dob).toISOString();
+        console.log(user);
+        this.usersService.save(user);
+        /* Any API call logic via services goes here */
+    }
 
   }
 }

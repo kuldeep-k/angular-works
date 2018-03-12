@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsersService, Users, UserListResponse } from './users.service';
+import { UsersService, Users, UserListResponse } from './../../lib/users.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { Observable } from "rxjs/Rx";
