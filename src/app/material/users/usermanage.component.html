@@ -22,51 +22,51 @@
 
 <div class="example-container">
   <mat-form-field>
-    <input matInput formControlName="email" placeholder="Email">
+    <input matInput formControlName="email" placeholder="Email" value="nisha@gmail.com">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput type="password" formControlName="password" placeholder="Password">
+    <input matInput type="password" formControlName="password" placeholder="Password" value="123456">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput type="password" formControlName="confirmpassword" placeholder="Confirm Password">
-  </mat-form-field>
-  
-  <mat-form-field>
-    <input matInput formControlName="firstName" placeholder="First Name">
+    <input matInput type="password" formControlName="confirmpassword" placeholder="Confirm Password" value="123456">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="lastName" placeholder="Last Name">
+    <input matInput formControlName="firstName" placeholder="First Name" value="Nisha">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Date of Birth">
+    <input matInput formControlName="lastName" placeholder="Last Name" value="Kamboj">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Date of Birth" value="6/14/1984">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker touchUi="true" #picker></mat-datepicker>
 
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="education" placeholder="Education">
+    <input matInput formControlName="education" placeholder="Education" value="MA">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="occupation" placeholder="Occupation">
+    <input matInput formControlName="occupation" placeholder="Occupation" value="House Wife">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="currentLocation" placeholder="Current Location">
+    <input matInput formControlName="currentLocation" placeholder="Current Location" value="Ghaziabad">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput formControlName="permLocation" placeholder="Perm. Location">
+    <input matInput formControlName="permLocation" placeholder="Perm. Location" value="Haridwar">
   </mat-form-field>
 </div>
 </mat-card-content>
 <mat-card-actions>
-  <button mat-raised-button (click)="save()">Save</button>
+  <button mat-raised-button>Save</button>
 </mat-card-actions>
 
 </mat-card>

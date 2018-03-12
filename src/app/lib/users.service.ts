@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from "rxjs/Rx";
+
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -29,6 +30,34 @@ export class UsersService {
       console.log(res);
       return res.json();
     });
+  }
+
+  public save(data) {
+    console.log('In Save')
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    //let options = new RequestOptions(new RequestOptionsArgs({ 'headers': headers }));
+    if(typeof data.id === 'undefined') {
+      console.log('In Post Request')
+      return this.http.post('http://localhost:3000/users', JSON.stringify(data),
+    {headers: headers }).subscribe((res: Response) => {
+        console.log('In Post Response')
+        console.log(res);
+        return res.json();
+      })
+      //.catch((e: any) => Observable.throw(this.errorHandler(e)));
+    } else {
+      console.log('In Put Request')
+      return this.http.put('http://localhost:3000/users/' + data.id, data).map((res: Response) => {
+        console.log('In Put Response')
+        console.log(res);
+        return res.json();
+      });
+    }
+
+  }
+
+  errorHandler(error) {
+    console.log(error);
   }
 }
 
