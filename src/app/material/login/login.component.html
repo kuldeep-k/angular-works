@@ -1,13 +1,36 @@
-<h1>Sign In</h1>
-<form [formGroup]="loginForm" (ngSubmit)="login($event)">
+<style>
+
+  mat-card {
+    max-width: 400px;
+  }
+
+  mat-card-footer  {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+<mat-card class="example-card">
+    <mat-card-title>Sign In</mat-card-title>
+    <form [formGroup]="loginForm" (ngSubmit)="login($event)">
+    <mat-card-content>
+
+    <div *ngIf="errormsg">{{errormsg}}</div>
 <div class="example-container">
   <mat-form-field>
-    <input matInput formControlName="email" placeholder="Email">
+    <input matInput formControlName="email" placeholder="Email" >
+    
+
   </mat-form-field>
 
   <mat-form-field>
     <input matInput type="password" formControlName="password" placeholder="Password">
   </mat-form-field>
-  <button mat-raised-button (click)="login()">Sign In</button>
+  
 </div>
+
+</mat-card-content>
+<mat-card-footer>
+    <button mat-raised-button (click)="login()">Sign In</button>
+</mat-card-footer>
 </form>
+</mat-card>

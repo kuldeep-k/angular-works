@@ -37,8 +37,8 @@ export class UsersComponent implements OnInit {
     this.usersCount = data.loadCount();
 
     this.displayedColumns = ['email', 'firstName', 'lastName', 'dob', 'education', 'occupation', 'currentLocation'];
-    console.log('XCXCXC')
-    console.log(data.count);
+    // console.log('XCXCXC')
+    // console.log(data.count);
     // data.paginator = this.paginator;
     // this.usersCount  = 12;
     this.data = data;
@@ -63,8 +63,8 @@ export class UsersComponent implements OnInit {
 
           )
           .map(data => {
-            console.log('-=-=-=-=-=-=-=-=-=-');
-            console.log(data);
+            // console.log('-=-=-=-=-=-=-=-=-=-');
+            // console.log(data);
             return data['data'];
           })
           .subscribe();
