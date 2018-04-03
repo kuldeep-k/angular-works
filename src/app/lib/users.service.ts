@@ -7,8 +7,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 @Injectable()
 export class UsersService {
-
-  constructor(private http: Http) { }
+  token: string;
+  headerOptions: RequestOptions;
+  constructor(private http: Http) { 
+    
+  }
   public getList(filter, sortColumn, sortDirection, pageIndex, pageSize): Observable<UserListResponse> {
     //return this.http.get('http://localhost:3000/users').map((res: Response) => res.json());
     // filter, sortDirection, pageIndex, pageSize
@@ -16,7 +19,7 @@ export class UsersService {
 
     if(Object.keys(filter).length > 0) {
       for(let i in filter) {
-        filterQuery += ('&' + i + '=' + filter[i])
+        filterQuery += ('&' + i + '=' + filter[i]);
       }
       /*filterQuery = keys.reduce((acc, cv) => {
         console.log('==============');
@@ -24,32 +27,34 @@ export class UsersService {
         return acc + ('&' + cv + '=' + filter[cv]);
       });*/
     }
-
-    return this.http.get('http://localhost:3000/users?' + filterQuery + '&sortBy=' + sortColumn + '&sortOrder=' + sortDirection + '&page=' + pageIndex + '&pageSize=' + pageSize).map((res: Response) => {
-      console.log('In Response')
-      console.log(res);
+    this.token = sessionStorage.getItem('jwtToken');
+    let headers: any = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + this.token);
+                    
+    
+    this.headerOptions = new RequestOptions();
+    this.headerOptions.headers = headers;
+    
+    return this.http.get('http://localhost:3000/users?' + filterQuery + 
+    '&sortBy=' + sortColumn + '&sortOrder=' + sortDirection + 
+    '&page=' + pageIndex + '&pageSize=' + pageSize, 
+    this.headerOptions ).map( (res: Response) => {
       return res.json();
     });
   }
 
   public save(data) {
-    console.log('In Save')
     let headers = new Headers({ 'Content-Type': 'application/json' });
     //let options = new RequestOptions(new RequestOptionsArgs({ 'headers': headers }));
     if(typeof data.id === 'undefined') {
-      console.log('In Post Request')
       return this.http.post('http://localhost:3000/users', JSON.stringify(data),
     {headers: headers }).subscribe((res: Response) => {
-        console.log('In Post Response')
-        console.log(res);
         return res.json();
       })
       //.catch((e: any) => Observable.throw(this.errorHandler(e)));
     } else {
-      console.log('In Put Request')
       return this.http.put('http://localhost:3000/users/' + data.id, data).map((res: Response) => {
-        console.log('In Put Response')
-        console.log(res);
         return res.json();
       });
     }
