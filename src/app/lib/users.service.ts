@@ -10,6 +10,13 @@ export class UsersService {
   token: string;
   headerOptions: RequestOptions;
   constructor(private http: Http) { 
+    this.token = sessionStorage.getItem('jwtToken');
+    let headers: any = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + this.token);
+
+    this.headerOptions = new RequestOptions();
+    this.headerOptions.headers = headers;
     
   }
   public getList(filter, sortColumn, sortDirection, pageIndex, pageSize): Observable<UserListResponse> {
@@ -27,15 +34,7 @@ export class UsersService {
         return acc + ('&' + cv + '=' + filter[cv]);
       });*/
     }
-    this.token = sessionStorage.getItem('jwtToken');
-    let headers: any = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'Bearer ' + this.token);
-                    
-    
-    this.headerOptions = new RequestOptions();
-    this.headerOptions.headers = headers;
-    
+
     return this.http.get('http://localhost:3000/users?' + filterQuery + 
     '&sortBy=' + sortColumn + '&sortOrder=' + sortDirection + 
     '&page=' + pageIndex + '&pageSize=' + pageSize, 
@@ -44,17 +43,29 @@ export class UsersService {
     });
   }
 
-  public save(data) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    //let options = new RequestOptions(new RequestOptionsArgs({ 'headers': headers }));
-    if(typeof data.id === 'undefined') {
-      return this.http.post('http://localhost:3000/users', JSON.stringify(data),
-    {headers: headers }).subscribe((res: Response) => {
+  public get(userId): Observable<Users> {
+    let filterQuery = '';
+
+    return this.http.get('http://localhost:3000/users/' + userId, 
+      this.headerOptions ).map( (res: Response) => {
         return res.json();
-      })
+    });
+  }
+
+  public save(data) {
+    // let headers = new Headers({ 'Content-Type': 'application/json' });
+
+    if (typeof data.id === 'undefined') {
+      console.log('X');
+      return this.http.post('http://localhost:3000/users', JSON.stringify(data),
+      this.headerOptions).subscribe((res: Response) => {
+        return res.json();
+      });
       //.catch((e: any) => Observable.throw(this.errorHandler(e)));
     } else {
-      return this.http.put('http://localhost:3000/users/' + data.id, data).map((res: Response) => {
+      console.log('Y');
+      return this.http.put('http://localhost:3000/users/' + data.id, JSON.stringify(data), 
+      this.headerOptions).subscribe((res: Response) => {
         return res.json();
       });
     }
@@ -75,10 +86,13 @@ export interface UserListResponse {
 
 export interface Users {
   email: string;
+  password: string;
+  confirmpassword :string;
   firstName: number;
   lastName: number;
   dob: string;
   education: string;
   occupation: string;
   currentLoction: string;
+  permLoction: string;
 }

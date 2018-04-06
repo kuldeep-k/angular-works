@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService, Users, UserListResponse } from '../../lib/users.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
@@ -8,23 +9,27 @@ import { catchError, finalize, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // import { Observable } from  'rxjs/Observable';
 import { FormBuilder, FormGroup, FormControl,  Validators } from '@angular/forms';
-
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-material-user-manage',
   templateUrl: './usermanage.component.html',
   styleUrls: ['./users.component.css'],
-  providers: [UsersService]
+  providers: [UsersService, MatSnackBar]
 })
 
 export class UsermanageComponent implements OnInit {
   private data: any;
+  private user: any;
+  private userId: string;
   private displayedColumns = [];
   private usersCount = 0;
   public userManageForm: any;
-   password = 'password';
-    confirmpassword = 'confirmpassword';
+  public dob: any;
+  password = 'password';
+  confirmpassword = 'confirmpassword';
 
-  constructor(private fb: FormBuilder, public usersService: UsersService) { }
+  constructor(private fb: FormBuilder, public usersService: UsersService, 
+    private route: ActivatedRoute, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     /*this.userManageForm = this.fb.group({
@@ -40,16 +45,45 @@ export class UsermanageComponent implements OnInit {
       currentLocation: ["", Validators.required]
     });*/
     this.userManageForm = this.fb.group({
-      email: [""],
-      password: [""],
-      confirmpassword: [""],
-      firstName: [""],
-      lastName: [""],
-      dob: [""],
-      education: [""],
-      occupation: [""],
-      permLocation: [""],
-      currentLocation: [""]
+        email: ["", [Validators.required]],
+        password: ["", [Validators.required]],
+        confirmpassword: ["", [Validators.required]],
+        firstName: ["", [Validators.required]],
+        lastName: ["", [Validators.required]],
+        dob: ["", [Validators.required]],
+        education: [""],
+        occupation: [""],
+        permLocation: [""],
+        currentLocation: [""]
+      });
+      this.dob = new Date();  
+      this.route.params.subscribe((params: any) => {
+        if (params.hasOwnProperty('id')) {
+            this.userId = params['id'];
+
+            this.usersService.get(this.userId).subscribe((data:any) => {
+                const userData = data;
+                
+                this.userManageForm.patchValue({
+                    email: [userData.email],
+                    password: [""],
+                    confirmpassword: [""],
+                    firstName: [userData.firstName],
+                    lastName: [userData.lastName],
+                    dob: [],
+                    education: [userData.education],
+                    occupation: [userData.occupation],
+                    permLocation: [userData.permLocation],
+                    currentLocation: [userData.currentLocation]
+                  });
+                  this.dob = new Date(userData.dob); 
+            }, () => {
+            // No Handling
+            }, () => {
+            });
+        } else {
+            
+        }
     });
   }
 
@@ -94,14 +128,41 @@ export class UsermanageComponent implements OnInit {
   }
 
   save() {
-    if(this.userManageForm.valid) {
+    let msg = '';  
+    if (this.userManageForm.valid) {
         let user = this.userManageForm.value;
-
+        if(this.userId) {
+            msg = 'User updated successfully';
+            user.id = this.userId;
+        } else {
+            msg = 'User addeded successfully';
+        }
+        
         // user.dob = new Date(user.dob).toISOString();
         console.log(user);
         this.usersService.save(user);
+        this.snackBar.open(msg, 'Action', {
+            duration: 2000,
+        });
+        this.router.navigate(['users']);
         /* Any API call logic via services goes here */
     }
 
+  }
+
+  dateFormat(dt: Date) {
+    dt = new Date(dt);
+    let mm = dt.getMonth() + 1; // getMonth() is zero-based
+    let dd = dt.getDate();
+
+    let fdt = [
+        (mm > 9 ? '' : '0') + mm,
+        '/',
+        (dd > 9 ? '' : '0') + dd,
+        '/',
+        dt.getFullYear(),
+    ].join('');
+    console.log(fdt);
+    return fdt;    
   }
 }

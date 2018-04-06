@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 import { UsermanageComponent } from './users/usermanage.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   imports: [
     CommonModule,
@@ -28,10 +29,11 @@ import { UsermanageComponent } from './users/usermanage.component';
     MatSortModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   exports: [MatSidenavModule, MatMenuModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatSortModule,
-  MatCardModule, MatDatepickerModule, MatNativeDateModule],
+  MatCardModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule],
   declarations: [
     LoginComponent,
     UsersComponent,

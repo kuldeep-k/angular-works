@@ -29,7 +29,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      <mat-cell *matCellDef="let element" (onclick)="openEditForm(event)"> {{element.email}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
@@ -61,8 +61,16 @@
     </ng-container>
     <ng-container matColumnDef="currentLocation">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Current Location</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.currentLocation}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{element.currentLocation}} </mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element" >
+          <button mat-raised-button (click)="openEditForm(element)" >Edit</button> 
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
