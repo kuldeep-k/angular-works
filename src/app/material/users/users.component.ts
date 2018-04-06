@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
     data.loadUsers({}, 'firstName', 'asc', 0, 3);
     this.usersCount = data.loadCount();
 
-    this.displayedColumns = ['email', 'firstName', 'lastName', 'dob', 'education', 'occupation', 'currentLocation'];
+    this.displayedColumns = ['email', 'firstName', 'lastName', 'dob', 'education', 'occupation', 'currentLocation', 'actions'];
     // console.log('XCXCXC')
     // console.log(data.count);
     // data.paginator = this.paginator;
@@ -82,6 +82,11 @@ export class UsersComponent implements OnInit {
 
     openAddUser() {
       this.router.navigate(['users/add']);
+    }
+
+    openEditForm($event) {
+      console.log($event)
+      this.router.navigate(['users/edit', $event.id]);
     }
   }
 
@@ -132,4 +137,6 @@ export class UsersComponent implements OnInit {
     loadCount() {
       return this.count;
     }
+
+    
   }
