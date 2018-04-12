@@ -1,8 +1,6 @@
 # angular-works
 
-* Angular based works
-
-** A frontend Angular 4 application for following features **
+> A frontend Angular 4 application for following features
 
 - Material based theme/components
 - Node Js REST Integration
