@@ -18,19 +18,19 @@
 <div class="example-container">
   <mat-form-field>
     <input matInput formControlName="email" placeholder="Email" >
-    
+
 
   </mat-form-field>
 
   <mat-form-field>
     <input matInput type="password" formControlName="password" placeholder="Password">
   </mat-form-field>
-  
+
 </div>
 
 </mat-card-content>
 <mat-card-footer>
-    <button mat-raised-button (click)="login()">Sign In</button>
+    <button mat-raised-button (click)="login($event)">Sign In</button>
 </mat-card-footer>
 </form>
 </mat-card>

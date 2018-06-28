@@ -18,7 +18,7 @@ import {Router} from '@angular/router'
 })
 
 export class UsersComponent implements OnInit {
-  private data: any;
+  public data: any;
   private displayedColumns = [];
   private usersCount = 0;
   public userSearchForm: any;
@@ -88,6 +88,10 @@ export class UsersComponent implements OnInit {
       console.log($event)
       this.router.navigate(['users/edit', $event.id]);
     }
+
+    search(form) {
+
+    }
   }
 
 
@@ -138,5 +142,5 @@ export class UsersComponent implements OnInit {
       return this.count;
     }
 
-    
+
   }

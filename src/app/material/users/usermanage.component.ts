@@ -28,7 +28,7 @@ export class UsermanageComponent implements OnInit {
   password = 'password';
   confirmpassword = 'confirmpassword';
 
-  constructor(private fb: FormBuilder, public usersService: UsersService, 
+  constructor(private fb: FormBuilder, public usersService: UsersService,
     private route: ActivatedRoute, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -56,14 +56,14 @@ export class UsermanageComponent implements OnInit {
         permLocation: [""],
         currentLocation: [""]
       });
-      this.dob = new Date();  
+      this.dob = new Date();
       this.route.params.subscribe((params: any) => {
         if (params.hasOwnProperty('id')) {
             this.userId = params['id'];
 
             this.usersService.get(this.userId).subscribe((data:any) => {
                 const userData = data;
-                
+
                 this.userManageForm.patchValue({
                     email: [userData.email],
                     password: [""],
@@ -76,13 +76,13 @@ export class UsermanageComponent implements OnInit {
                     permLocation: [userData.permLocation],
                     currentLocation: [userData.currentLocation]
                   });
-                  this.dob = new Date(userData.dob); 
+                  this.dob = new Date(userData.dob);
             }, () => {
             // No Handling
             }, () => {
             });
         } else {
-            
+
         }
     });
   }
@@ -127,8 +127,8 @@ export class UsermanageComponent implements OnInit {
       }
   }
 
-  save() {
-    let msg = '';  
+  save(form) {
+    let msg = '';
     if (this.userManageForm.valid) {
         let user = this.userManageForm.value;
         if(this.userId) {
@@ -137,7 +137,7 @@ export class UsermanageComponent implements OnInit {
         } else {
             msg = 'User addeded successfully';
         }
-        
+
         // user.dob = new Date(user.dob).toISOString();
         console.log(user);
         this.usersService.save(user);
@@ -163,6 +163,6 @@ export class UsermanageComponent implements OnInit {
         dt.getFullYear(),
     ].join('');
     console.log(fdt);
-    return fdt;    
+    return fdt;
   }
 }
